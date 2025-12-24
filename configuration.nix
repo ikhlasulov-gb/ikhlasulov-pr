@@ -13,11 +13,11 @@
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-      timeout = 0;
+      timeout = 1;
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" ]; # AMD [ "kvm-amd" ]; Intel [ "kvm-intel" ]
 
     kernelParams = [
       "quiet"
@@ -28,7 +28,7 @@
 
     initrd = {
       luks.devices."luks-f69f8097-e1ac-4741-b04c-370a100a1263".device =
-        "/dev/disk/by-uuid/f69f8097-e1ac-4741-b04c-370a100a1263";
+        "/dev/disk/by-uuid/f69f8097-e1ac-4741-b04c-370a100a1263"; # UUID
       systemd.enable = true;
       verbose = false;
     };
@@ -55,7 +55,7 @@
         FastConnectable = true;
       };
       Policy = {
-        AutoEnable = true;
+        AutoEnable = false;
       };
     };
   };
@@ -100,6 +100,7 @@
 
   programs = {
     labwc.enable = true;
+    virt-manager.enable = true;
 
     steam = {
       enable = true;
@@ -119,23 +120,41 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    wineWowPackages.staging
+    (python3.withPackages (ps: with ps; [ pygame-ce ]))
+    curtail
     dxvk
-    vkd3d-proton
-    git
-    smartmontools
-    kdePackages.partitionmanager
     exfatprogs
-    peazip
-    sedutil
+    gimp
+    git
+    kdePackages.ghostwriter
+    kdePackages.isoimagewriter
+    kdePackages.kdenlive
+    kdePackages.kcalc
+    kdePackages.kate
+    kdePackages.partitionmanager
+    kitty
+    labwc
+    llama-cpp
+    motrix
     ntfs3g
+    onlyoffice-desktopeditors
+    pdfarranger
+    peazip
+    prismlauncher
+    qbittorrent
+    qview
+    sedutil
+    smartmontools
+    steam
+    steam-run
+    telegram-desktop
+    textcompare
+    vlc
+    vkd3d-proton
     wget
+    wineWowPackages.stagingFull
+    zapzap
   ];
-
-  xdg.portal = {
-    enable = true;
-    config.kde.default = [ "kde" "gtk" ];
-  };
 
   services = {
     fail2ban.enable = true;
@@ -147,7 +166,6 @@
     };
 
     desktopManager.plasma6.enable = true;
-    printing.enable = true;
 
     pipewire = {
       enable = true;

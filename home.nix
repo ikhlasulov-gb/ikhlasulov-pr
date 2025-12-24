@@ -14,34 +14,6 @@
     };
   };
 
-  home.packages = with pkgs; [
-    qbittorrent
-    llama-cpp
-    polkit
-    kdePackages.kate
-    (python3.withPackages (ps: with ps; [ pygame-ce ]))
-    kdePackages.kcalc
-    kdePackages.isoimagewriter
-    kdePackages.ghostwriter
-    zapzap
-    qview
-    curtail
-    textcompare
-    kdePackages.kdenlive
-    gimp
-    pdfarranger
-    steam
-    gnome-boxes
-    motrix
-    steam-run
-    labwc
-    kitty
-    telegram-desktop
-    prismlauncher
-  ];
-
-  programs.kitty.enable = true;
-
   home.sessionVariables = {
     XKB_DEFAULT_MODEL = "pc105";
     XKB_DEFAULT_LAYOUT = "us,ru";
